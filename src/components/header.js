@@ -24,7 +24,10 @@ const Header = ({ siteTitle }) => {
       </div>
       <div className="navbar-end">
         <div className="navbar-item">
-          <FaShoppingCart style={{ color: "white", height: 30, width: 30 }} />
+          <FaShoppingCart
+            onClick={addProductToCart}
+            style={{ color: "white", height: 30, width: 30 }}
+          />
         </div>
       </div>
     </header>
