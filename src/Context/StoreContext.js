@@ -6,17 +6,20 @@ const client = Client.buildClient({
   storefrontAccessToken: "9f3c2217037981549bd3b20a6ee0759b",
 })
 
-export const defaultValues = {
+const defaultValues = {
   isCartOpen: false,
   cart: [],
   addProductToCart: () => {},
   client,
+  checkout: {
+    lineItems: [],
+  },
 }
 
 export const StoreContext = createContext(defaultValues)
 
 export const StoreProvider = ({ children }) => {
-  const [checkout, setCheckout] = useState({})
+  const [checkout, setCheckout] = useState(defaultValues.checkout)
 
   useEffect(() => {
     initializeCheckout()
@@ -59,19 +62,26 @@ export const StoreProvider = ({ children }) => {
           quantity: 1,
         },
       ]
-      const addItems = await client.checkout.addLineItems(
+      const newCheckout = await client.checkout.addLineItems(
         checkout.id,
         lineItems
       )
       //* Next line will create a buy now option
       //  window.open(addItems.webUrl, "_blank")
-      console.log(addItems.webUrl)
+      setCheckout(newCheckout)
+      // console.log(addItems.webUrl)
     } catch (e) {
       console.error(e)
     }
   }
   return (
-    <StoreContext.Provider value={{ ...defaultValues, addProductToCart }}>
+    <StoreContext.Provider
+      value={{
+        ...defaultValues,
+        checkout,
+        addProductToCart,
+      }}
+    >
       {children}
     </StoreContext.Provider>
   )
