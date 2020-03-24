@@ -16,7 +16,7 @@ export const defaultValues = {
 export const StoreContext = createContext(defaultValues)
 
 export const StoreProvider = ({ children }) => {
-  const [checkoutId, setCheckoutId] = useState({})
+  const [checkout, setCheckout] = useState({})
 
   useEffect(() => {
     initializeCheckout()
@@ -24,8 +24,28 @@ export const StoreProvider = ({ children }) => {
 
   const initializeCheckout = async () => {
     try {
-      const newCheckout = await client.checkout.create()
-      setCheckoutId(newCheckout.id)
+      //* 1st need to check if it's a browser(if window exists)
+      const isBrowser = typeof window !== "undefined"
+
+      //* Check if id exists
+      const currentCheckoutId = isBrowser
+        ? localStorage.getItem("checkout_id")
+        : null
+
+      let newCheckout = null
+
+      if (currentCheckoutId) {
+        //* If id exists, fetch checkout from Shopify
+        newCheckout = await client.checkout.fetch(currentCheckoutId)
+      } else {
+        //* If id does not, create new checkout
+        newCheckout = await client.checkout.create()
+        if (isBrowser) {
+          localStorage.setItem("checkout_id", newCheckout.id)
+        }
+      }
+      //* Set checkout to State
+      setCheckout(newCheckout)
     } catch (e) {
       console.error(e)
     }
@@ -39,7 +59,10 @@ export const StoreProvider = ({ children }) => {
           quantity: 1,
         },
       ]
-      const addItems = await client.checkout.addLineItems(checkoutId, lineItems)
+      const addItems = await client.checkout.addLineItems(
+        checkout.id,
+        lineItems
+      )
       //* Next line will create a buy now option
       //  window.open(addItems.webUrl, "_blank")
       console.log(addItems.webUrl)
