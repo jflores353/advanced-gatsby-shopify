@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { StoreContext } from "../../Context/StoreContext"
 
 const Cart = () => {
-  const { isCartOpen, checkout } = useContext(StoreContext)
+  const { isCartOpen, toggleCartOpen, checkout } = useContext(StoreContext)
   console.log(checkout.lineItems)
   return (
     <div
@@ -14,8 +14,10 @@ const Cart = () => {
         height: "100%",
         background: "white",
         boxShadow: "var(--elevation-4)",
+        padding: 60,
       }}
     >
+      <button onClick={toggleCartOpen}>Close Cart</button>
       <h3>Cart</h3>
       {checkout.lineItems.map(item => (
         <div key={item.id}>
