@@ -8,7 +8,7 @@ import logo from "../images/logo.svg"
 import Cart from "./Cart/Cart"
 
 const Header = ({ siteTitle }) => {
-  const { isCartOpen, addProductToCart, client } = useContext(StoreContext)
+  const { isCartOpen, toggleCartOpen } = useContext(StoreContext)
   return (
     <header
       className="navbar"
@@ -25,13 +25,12 @@ const Header = ({ siteTitle }) => {
       </div>
       <div className="navbar-end">
         <div className="navbar-item">
-          <FaShoppingCart
-            onClick={addProductToCart}
-            style={{ color: "white", height: 30, width: 30 }}
-          />
+          <button onClick={toggleCartOpen}>
+            <FaShoppingCart style={{ color: "white", height: 30, width: 30 }} />
+          </button>
         </div>
       </div>
-      <Cart />
+      {isCartOpen && <Cart />}
     </header>
   )
 }
