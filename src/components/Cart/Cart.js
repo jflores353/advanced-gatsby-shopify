@@ -3,7 +3,12 @@ import { StoreContext } from "../../Context/StoreContext"
 import { animated } from "react-spring"
 
 const Cart = ({ style }) => {
-  const { isCartOpen, toggleCartOpen, checkout } = useContext(StoreContext)
+  const {
+    isCartOpen,
+    toggleCartOpen,
+    checkout,
+    removeProductFromCart,
+  } = useContext(StoreContext)
   console.log(checkout.lineItems)
   return (
     <animated.div
@@ -16,18 +21,52 @@ const Cart = ({ style }) => {
         background: "white",
         boxShadow: "var(--elevation-4)",
         padding: 60,
+        zIndex: 100,
         ...style,
       }}
     >
-      <button onClick={toggleCartOpen}>Close Cart</button>
-      <h3>Cart</h3>
+      <button
+        style={{
+          background: "var(--red)",
+          position: "absolute",
+          top: 10,
+          right: 10,
+        }}
+        className="delete is-large"
+        onClick={toggleCartOpen}
+      >
+        Close Cart
+      </button>
+      <h3 className="title">Cart</h3>
       {checkout.lineItems.map(item => (
-        <div key={item.id}>
-          <h4>{item.title}</h4>
-          <p>{item.quantity}</p>
-          <p>${item.variant.price}</p>
+        <div key={item.id} style={{ display: "flex", marginBottom: "2rem" }}>
+          <div
+            style={{
+              width: 60,
+              height: 80,
+              overflow: "hidden",
+              marginRight: 10,
+            }}
+          >
+            <img src={item.variant.image.src} alt="product image" />
+          </div>
+          <div>
+            <h4 className="title is-4">{item.title}</h4>
+            <p className="subtitle is-5">Qty: {item.quantity}</p>
+            <p className="subtitle is-5">${item.variant.price}</p>
+            <button
+              onClick={() => removeProductFromCart(item.id)}
+              className="is-small button is-danger is-outlined"
+            >
+              Remove
+            </button>
+          </div>
         </div>
       ))}
+      <hr />
+      <p className="subtitle is-5">
+        Total:<h5 className="title">${checkout.totalPrice}</h5>
+      </p>
     </animated.div>
   )
 }
