@@ -17,10 +17,10 @@ const Header = ({ siteTitle }) => {
   })
   return (
     <header
-      className="navbar"
+      className="level is-mobile"
       style={{ background: "var(--purp)", boxShadow: "var(--elevation-2)" }}
     >
-      <div className="navbar-brand">
+      <div className="level-left">
         <Link to="/" className="navbar-item">
           <img
             style={{ height: 60, maxHeight: "none", marginBottom: 0 }}
@@ -29,9 +29,13 @@ const Header = ({ siteTitle }) => {
           />
         </Link>
       </div>
-      <div className="navbar-end">
+      <div className="level-right">
         <div className="navbar-item">
-          <button onClick={toggleCartOpen}>
+          <button
+            className="button"
+            style={{ background: "transparent", border: "none" }}
+            onClick={toggleCartOpen}
+          >
             <FaShoppingCart style={{ color: "white", height: 30, width: 30 }} />
           </button>
         </div>
@@ -39,7 +43,6 @@ const Header = ({ siteTitle }) => {
       {transitions.map(
         ({ item, key, props }) => item && <Cart key={key} style={props} />
       )}
-      {isCartOpen && <Cart />}
     </header>
   )
 }
