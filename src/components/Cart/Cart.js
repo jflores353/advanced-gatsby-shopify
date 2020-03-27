@@ -16,7 +16,7 @@ const Cart = ({ style }) => {
         position: "fixed",
         top: 0,
         right: 0,
-        width: "50%",
+        width: "30%",
         height: "100%",
         background: "white",
         boxShadow: "var(--elevation-4)",
@@ -64,9 +64,14 @@ const Cart = ({ style }) => {
         </div>
       ))}
       <hr />
-      <p className="subtitle is-5">
+      <div className="subtitle is-5">
         Total:<h5 className="title">${checkout.totalPrice}</h5>
-      </p>
+      </div>
+      <div style={{ marginTop: "2rem" }}>
+        <a href={checkout.webUrl} className="button is-fullwidth is-success">
+          Pay Now
+        </a>
+      </div>
     </animated.div>
   )
 }
