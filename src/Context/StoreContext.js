@@ -15,6 +15,7 @@ const defaultValues = {
   checkout: {
     lineItems: [],
   },
+  removeProductFromCart: () => {},
 }
 
 export const StoreContext = createContext(defaultValues)
@@ -80,6 +81,20 @@ export const StoreProvider = ({ children }) => {
       console.error(e)
     }
   }
+
+  const removeProductFromCart = async lineItemId => {
+    try {
+      const newCheckout = await client.checkout.removeLineItems(checkout.id, [
+        lineItemId,
+      ])
+      //* Next line will create a buy now option
+      //  window.open(addItems.webUrl, "_blank")
+      setCheckout(newCheckout)
+      // console.log(addItems.webUrl)
+    } catch (e) {
+      console.error(e)
+    }
+  }
   return (
     <StoreContext.Provider
       value={{
@@ -88,6 +103,7 @@ export const StoreProvider = ({ children }) => {
         addProductToCart,
         toggleCartOpen,
         isCartOpen,
+        removeProductFromCart,
       }}
     >
       {children}
