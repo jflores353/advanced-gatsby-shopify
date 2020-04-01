@@ -5,7 +5,7 @@ import { useTransition } from "react-spring"
 import { FaShoppingCart } from "react-icons/fa"
 import "../style.scss"
 import { StoreContext } from "../Context/StoreContext"
-import logo from "../images/logo.svg"
+import logo from "../images/bee-logo.png"
 import Cart from "./Cart/Cart"
 
 const Header = ({ siteTitle }) => {
@@ -21,14 +21,25 @@ const Header = ({ siteTitle }) => {
   return (
     <header
       className="level is-mobile"
-      style={{ background: "var(--purp)", boxShadow: "var(--elevation-2)" }}
+      style={{ background: "var(--green)", boxShadow: "var(--elevation-2)" }}
     >
       <div className="level-left">
-        <Link to="/" className="navbar-item">
+        <Link
+          to="/"
+          className="navbar-item"
+          style={{ background: "transparent" }}
+        >
           <img
-            style={{ height: 60, maxHeight: "none", marginBottom: 0 }}
+            className="button"
+            style={{
+              height: 80,
+              maxHeight: "none",
+              margin: 0,
+              background: "transparent",
+              border: "none",
+            }}
             src={logo}
-            alt="Level Up Logo"
+            alt="Gatsby Ecommerce Logo"
           />
         </Link>
       </div>
@@ -42,8 +53,8 @@ const Header = ({ siteTitle }) => {
             {qty > 0 && (
               <div
                 style={{
-                  color: "white",
-                  background: "var(--red)",
+                  color: "var(--grey)",
+                  background: "var(--darkGreen)",
                   borderRadius: 15,
                   textAlign: "center",
                   height: 30,
@@ -56,7 +67,9 @@ const Header = ({ siteTitle }) => {
               </div>
             )}
 
-            <FaShoppingCart style={{ color: "white", height: 30, width: 30 }} />
+            <FaShoppingCart
+              style={{ color: "var(--blue)", height: 30, width: 30 }}
+            />
           </button>
         </div>
       </div>

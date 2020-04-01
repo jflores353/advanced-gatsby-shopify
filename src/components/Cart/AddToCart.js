@@ -6,6 +6,7 @@ const AddToCart = ({ variantId }) => {
   return (
     <button
       className="button is-primary is-rounded"
+      style={{ backgroundColor: "var(--green)", color: "var(--grey)" }}
       onClick={() => addProductToCart(variantId)}
     >
       Add To Cart

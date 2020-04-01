@@ -15,8 +15,12 @@ const ProductsListingItem = ({ product }) => {
         style={{ display: "block", marginBottom: "2rem" }}
       >
         <Image fluid={firstImage.localFile.childImageSharp.fluid} />
-        <h3 className="title is-3">{product.title}</h3>
-        <p className="subtitle is-4">${firstVariant.price}</p>
+        <h3 className="title is-3" style={{ color: "var(--blue)" }}>
+          {product.title}
+        </h3>
+        <p className="subtitle is-4" style={{ color: "var(--darkGreen)" }}>
+          ${firstVariant.price}
+        </p>
       </Link>
       <AddToCart variantId={firstVariant.shopifyId} />
     </article>

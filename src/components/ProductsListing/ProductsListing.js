@@ -22,7 +22,7 @@ const PRODUCTS_LISTING_QUERY = graphql`
             id
             localFile {
               childImageSharp {
-                fluid(maxWidth: 400, maxHeight: 400) {
+                fluid(maxWidth: 700, maxHeight: 700) {
                   ...GatsbyImageSharpFluid_withWebp
                 }
               }
@@ -37,7 +37,9 @@ const PRODUCTS_LISTING_QUERY = graphql`
 const ProductsListing = () => {
   return (
     <div>
-      <h2 className="title">Level Up Products</h2>
+      <h2 className="title" style={{ color: "var(--blue)" }}>
+        Web Dev Products
+      </h2>
       <StaticQuery
         query={PRODUCTS_LISTING_QUERY}
         render={({ products }) => {
