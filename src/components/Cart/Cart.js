@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { StoreContext } from "../../Context/StoreContext"
 import { animated } from "react-spring"
 
@@ -8,8 +8,12 @@ const Cart = ({ style }) => {
     toggleCartOpen,
     checkout,
     removeProductFromCart,
+    checkCoupon,
+    removeCoupon,
   } = useContext(StoreContext)
-  console.log(checkout.lineItems)
+
+  const [coupon, setCoupon] = useState("")
+
   return (
     <animated.div
       style={{
@@ -63,12 +67,56 @@ const Cart = ({ style }) => {
           </div>
         </div>
       ))}
-      <hr />
+      <div>
+        {checkout.discountApplications.length > 0 ? (
+          <p>
+            Coupon:
+            <h5 className="title">
+              {checkout.discountApplications[0].code} -{" "}
+              {checkout.discountApplications[0].value.percentage}% off
+            </h5>
+            <button
+              onClick={() => removeCoupon(coupon)}
+              className="is-small button is-danger is-outlined"
+            >
+              Remove
+            </button>
+          </p>
+        ) : (
+          <form
+            onSubmit={e => {
+              e.preventDefault()
+              checkCoupon(coupon)
+            }}
+          >
+            <div className="field">
+              <label htmlFor="coupon" className="label">
+                Coupon
+              </label>
+              <input
+                className="input"
+                value={coupon}
+                type="text"
+                onChange={e => setCoupon(e.target.value)}
+                placeholder="Enter Code"
+              />
+            </div>
+            <button>Add Coupon</button>
+          </form>
+        )}
+        <hr />
+      </div>
       <div className="subtitle is-5">
         Total:<h5 className="title">${checkout.totalPrice}</h5>
       </div>
       <div style={{ marginTop: "2rem" }}>
-        <a href={checkout.webUrl} className="button is-fullwidth is-success">
+        <a
+          href={checkout.webUrl}
+          className="button is-fullwidth"
+          style={{
+            backgroundColor: "var(--green)",
+          }}
+        >
           Pay Now
         </a>
       </div>
