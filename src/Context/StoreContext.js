@@ -24,6 +24,7 @@ export const StoreContext = createContext(defaultValues)
 export const StoreProvider = ({ children }) => {
   const [checkout, setCheckout] = useState(defaultValues.checkout)
   const [isCartOpen, setCartOpen] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   const toggleCartOpen = () => {
     setCartOpen(!isCartOpen)
@@ -75,6 +76,7 @@ export const StoreProvider = ({ children }) => {
   }
 
   const addProductToCart = async variantId => {
+    setLoading(true)
     try {
       const lineItems = [
         {
@@ -89,6 +91,7 @@ export const StoreProvider = ({ children }) => {
       //* Next line will create a buy now option
       //  window.open(addItems.webUrl, "_blank")
       setCheckout(newCheckout)
+      setLoading(false)
       // console.log(addItems.webUrl)
     } catch (e) {
       console.error(e)
@@ -96,6 +99,7 @@ export const StoreProvider = ({ children }) => {
   }
 
   const removeProductFromCart = async lineItemId => {
+    setLoading(true)
     try {
       const newCheckout = await client.checkout.removeLineItems(checkout.id, [
         lineItemId,
@@ -103,6 +107,7 @@ export const StoreProvider = ({ children }) => {
       //* Next line will create a buy now option
       //  window.open(addItems.webUrl, "_blank")
       setCheckout(newCheckout)
+      setLoading(false)
       // console.log(addItems.webUrl)
     } catch (e) {
       console.error(e)
@@ -110,16 +115,20 @@ export const StoreProvider = ({ children }) => {
   }
 
   const checkCoupon = async coupon => {
+    setLoading(true)
     const newCheckout = await client.checkout.addDiscount(checkout.id, coupon)
     setCheckout(newCheckout)
+    setLoading(false)
   }
 
   const removeCoupon = async coupon => {
+    setLoading(true)
     const newCheckout = await client.checkout.removeDiscount(
       checkout.id,
       coupon
     )
     setCheckout(newCheckout)
+    setLoading(false)
   }
 
   return (
@@ -133,6 +142,7 @@ export const StoreProvider = ({ children }) => {
         removeProductFromCart,
         checkCoupon,
         removeCoupon,
+        isLoading,
       }}
     >
       {children}
