@@ -94,6 +94,7 @@ export const StoreProvider = ({ children }) => {
       setLoading(false)
       // console.log(addItems.webUrl)
     } catch (e) {
+      setLoading(false)
       console.error(e)
     }
   }
@@ -110,6 +111,7 @@ export const StoreProvider = ({ children }) => {
       setLoading(false)
       // console.log(addItems.webUrl)
     } catch (e) {
+      setLoading(false)
       console.error(e)
     }
   }
