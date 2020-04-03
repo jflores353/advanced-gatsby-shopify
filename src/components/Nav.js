@@ -10,6 +10,7 @@ const Nav = () => {
             node {
               title
               handle
+              id
             }
           }
         }
@@ -19,7 +20,18 @@ const Nav = () => {
   return (
     <nav>
       {allShopifyCollection.edges.map(edge => {
-        return <Link to={`/${edge.node.handle}`}>{edge.node.title}</Link>
+        return (
+          <Link
+            key={edge.id}
+            style={{
+              color: "var(--grey)",
+              marginLeft: "2rem",
+            }}
+            to={`/${edge.node.handle}`}
+          >
+            {edge.node.title}
+          </Link>
+        )
       })}
     </nav>
   )
