@@ -8,6 +8,7 @@ import { StoreContext } from "../Context/StoreContext"
 import logo from "../images/bee-logo.png"
 import Cart from "./Cart/Cart"
 import Loader from "./Loader"
+import Nav from "./Nav"
 
 const Header = ({ siteTitle }) => {
   const { isCartOpen, toggleCartOpen, checkout } = useContext(StoreContext)
@@ -45,6 +46,7 @@ const Header = ({ siteTitle }) => {
               alt="Gatsby Ecommerce Logo"
             />
           </Link>
+          <Nav />
         </div>
         <div className="level-right">
           <div className="navbar-item">
